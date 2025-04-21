@@ -4,34 +4,34 @@ import { CreateApartmentDto } from './dto/create-apartment.dto';
 
 @Controller('apartments')
 export class ApartmentController {
-  constructor(private readonly service: ApartmentService) {}
+  constructor(private readonly apartmentService: ApartmentService) {}
 
   @Get()
-  getAll(
+  async getAll(
     @Query('page') page?: string,
     @Query('limit') limit?: string,
   ) {
     const pageNum = parseInt(page, 10) || 1;
     const limitNum = parseInt(limit, 10) || 10;
 
-    return this.service.findAll({ page: pageNum, limit: limitNum });
+    return await this.apartmentService.findAll({ page: pageNum, limit: limitNum });
   }
 
   @Get(':id')
-  getOne(@Param('id', ParseIntPipe) id: number) {
-    return this.service.findOne(id);
+  async getOne(@Param('id', ParseIntPipe) id: number) {
+    return await this.apartmentService.findOne(id);
   }
 
   @Post()
-  create(
+  async create(
     @Body(new ValidationPipe({ transform: true })) 
     createApartmentDto: CreateApartmentDto
   ) {
-    return this.service.create(createApartmentDto);
+    return await this.apartmentService.create(createApartmentDto);
   }
 
   @Delete(':id')
-  delete(@Param('id', ParseIntPipe) id: number) {
-    return this.service.remove(id);
+  async delete(@Param('id', ParseIntPipe) id: number) {
+    return await this.apartmentService.remove(id);
   }
 }
