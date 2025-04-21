@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Delete, Param, Body, Query, ParseIntPipe } from '@nestjs/common';
+import { Controller, Get, Post, Delete, Param, Body, Query, ParseIntPipe, ValidationPipe } from '@nestjs/common';
 import { ApartmentService } from './apartment.service';
 import { CreateApartmentDto } from './dto/create-apartment.dto';
 
@@ -23,8 +23,11 @@ export class ApartmentController {
   }
 
   @Post()
-  create(@Body() dto: CreateApartmentDto) {
-    return this.service.create(dto);
+  create(
+    @Body(new ValidationPipe({ transform: true })) 
+    createApartmentDto: CreateApartmentDto
+  ) {
+    return this.service.create(createApartmentDto);
   }
 
   @Delete(':id')
