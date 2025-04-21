@@ -7,10 +7,10 @@ export class Apartment {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
+  @Column({ length: 100 })
   title: string;
 
-  @Column()
+  @Column({ length: 500 })
   description: string;
 
   @Column({ type: 'float' })
