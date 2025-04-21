@@ -1,6 +1,7 @@
 import { Controller, Get, Post, Delete, Param, Body, Query, ParseIntPipe, ValidationPipe } from '@nestjs/common';
 import { ApartmentService } from './apartment.service';
 import { CreateApartmentDto } from './dto/create-apartment.dto';
+import { ApartmentExistsPipe } from './pipes/apartment-exists.pipe';
 
 @Controller('apartments')
 export class ApartmentController {
@@ -18,7 +19,7 @@ export class ApartmentController {
   }
 
   @Get(':id')
-  async getOne(@Param('id', ParseIntPipe) id: number) {
+  async getOne(@Param('id', ApartmentExistsPipe) id: number) {
     return await this.apartmentService.findOne(id);
   }
 
@@ -31,7 +32,7 @@ export class ApartmentController {
   }
 
   @Delete(':id')
-  async delete(@Param('id', ParseIntPipe) id: number) {
+  async delete(@Param('id', ApartmentExistsPipe) id: number) {
     return await this.apartmentService.remove(id);
   }
 }
