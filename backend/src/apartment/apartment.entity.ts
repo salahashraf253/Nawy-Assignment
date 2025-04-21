@@ -1,0 +1,36 @@
+import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import { SaleType } from '../enums/sale-type.enum';
+import { City } from '../enums/city.enum';
+
+@Entity()
+export class Apartment {
+  @PrimaryGeneratedColumn()
+  id: number;
+
+  @Column()
+  title: string;
+
+  @Column()
+  description: string;
+
+  @Column({ type: 'float' })
+  price: number;
+
+  @Column({ type: 'date' })
+  deliveryDate: Date;
+
+  @Column()
+  area: number;
+
+  @Column()
+  noOfBathrooms: number;
+
+  @Column()
+  noOfBedrooms: number;
+
+  @Column({ type: 'enum', enum: SaleType })
+  saleType: SaleType;
+
+  @Column({ type: 'enum', enum: City })
+  city: City;
+}
