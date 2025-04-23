@@ -5,6 +5,8 @@ import { ApartmentService } from "./apartment.service";
 import { CreateApartmentDto } from "./dto/create-apartment.dto";
 import { SaleType } from "../enums/sale-type.enum";
 import { City } from "../enums/city.enum";
+import { Image } from "src/image/image.entity";
+import { Apartment } from "./apartment.entity";
 
 function createTestApartment(overrides = {}) {
   const defaultApartment = {
@@ -147,18 +149,54 @@ describe("ApartmentController", () => {
       city: City.CAIRO,
     };
 
+    const mockFiles = [
+      {
+        fieldname: 'images',
+        originalname: 'test1.png',
+        encoding: '7bit',
+        mimetype: 'image/png',
+        buffer: Buffer.from('test1'),
+        size: 1024,
+      },
+      {
+        fieldname: 'images',
+        originalname: 'test2.png',
+        encoding: '7bit',
+        mimetype: 'image/png',
+        buffer: Buffer.from('test2'),
+        size: 2048,
+      },
+    ] as Express.Multer.File[];
+
+    const mockApartment = new Apartment();
+    mockApartment.id = 1;
+
+    const mockImages: Image[] = [
+      {
+        url: "/uploads/images-1745392956584-760042648.png",
+        id: 9,
+        apartment: mockApartment,
+      },
+      {
+        url: "/uploads/images-1745392956585-281526689.png",
+        id: 10,
+        apartment: mockApartment,
+      },
+    ];
+
     it("should create a new apartment", async () => {
       const created = {
         id: 2,
         ...validDto,
         deliveryDate: new Date(validDto.deliveryDate),
+        images: mockImages,
       };
 
       mockApartmentService.create.mockResolvedValue(created);
 
-      const result = await controller.create(validDto);
+      const result = await controller.create(validDto, mockFiles);
 
-      expect(service.create).toHaveBeenCalledWith(validDto);
+      expect(service.create).toHaveBeenCalledWith(validDto, mockFiles);
       expect(result).toEqual(created);
       expect(result).toHaveProperty("id", 2);
       expect(result.deliveryDate).toBeInstanceOf(Date);
@@ -174,7 +212,7 @@ describe("ApartmentController", () => {
 
       for (const dto of invalidDtos) {
         try {
-          await controller.create(dto);
+          await controller.create(dto, mockFiles);
         } catch (error) {
           expect(error).toBeInstanceOf(BadRequestException);
         }
@@ -189,7 +227,7 @@ describe("ApartmentController", () => {
       } as any;
 
       try {
-        await controller.create(invalidDto);
+        await controller.create(invalidDto, mockFiles);
       } catch (error) {
         expect(error).toBeInstanceOf(BadRequestException);
       }
