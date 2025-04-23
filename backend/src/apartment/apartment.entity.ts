@@ -1,7 +1,7 @@
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column , OneToMany} from 'typeorm';
 import { SaleType } from '../enums/sale-type.enum';
 import { City } from '../enums/city.enum';
-
+import { Image } from '../image/image.entity';
 @Entity()
 export class Apartment {
   @PrimaryGeneratedColumn()
@@ -33,4 +33,7 @@ export class Apartment {
 
   @Column({ type: 'enum', enum: City })
   city: City;
+
+  @OneToMany(() => Image, (image) => image.apartment, { cascade: true })
+  images?: Image[];
 }

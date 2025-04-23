@@ -1,7 +1,8 @@
-import { Controller, Get, Post, Delete, Param, Body, Query, ParseIntPipe, ValidationPipe } from '@nestjs/common';
+import { Controller, Get, Post, Delete, Param, Body, Query, UseInterceptors,  UploadedFiles,ValidationPipe } from '@nestjs/common';
 import { ApartmentService } from './apartment.service';
 import { CreateApartmentDto } from './dto/create-apartment.dto';
 import { ApartmentExistsPipe } from './pipes/apartment-exists.pipe';
+import { FilesInterceptor } from '@nestjs/platform-express';
 
 @Controller('apartments')
 export class ApartmentController {
@@ -24,11 +25,12 @@ export class ApartmentController {
   }
 
   @Post()
+  @UseInterceptors(FilesInterceptor('images', 10))
   async create(
-    @Body(new ValidationPipe({ transform: true })) 
-    createApartmentDto: CreateApartmentDto
+    @Body() createApartmentDto,
+    @UploadedFiles() images: Express.Multer.File[],
   ) {
-    return await this.apartmentService.create(createApartmentDto);
+    return this.apartmentService.create(createApartmentDto, images);
   }
 
   @Delete(':id')
