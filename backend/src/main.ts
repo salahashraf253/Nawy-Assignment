@@ -9,6 +9,12 @@ async function bootstrap() {
     prefix: '/uploads/',
   });
   const port = process.env.PORT || 5000;
+  app.use(require('cors')());
+  app.enableCors({
+    origin: '*', 
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    credentials: true,
+  });
   await app.listen(port);
 }
 bootstrap();
