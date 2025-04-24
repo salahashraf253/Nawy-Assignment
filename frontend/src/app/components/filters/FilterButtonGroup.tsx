@@ -15,7 +15,7 @@ export const FilterButtonGroup = <T extends string | number>({
   label,
 }: FilterButtonGroupProps<T>) => {
   return (
-    <div className="flex flex-wrap gap-2" aria-label={label}>
+    <div className="flex flex-nowrap gap-2  overflow-auto" aria-label={label}>
       {options.map((option) => {
         const active = selectedOptions.includes(option);
         return (
