@@ -5,6 +5,7 @@ export class FetchApartmentDto {
   id: number;
   title: string;
   description: string;
+  developer: string;
   price: number;
   deliveryDate: Date;
   area: number;

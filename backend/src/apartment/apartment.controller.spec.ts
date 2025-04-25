@@ -147,6 +147,7 @@ describe("ApartmentController", () => {
       noOfBedrooms: 4,
       saleType: SaleType.RESALE,
       city: City.CAIRO,
+      developer: "ABC Developers",
     };
 
     const mockFiles = [
