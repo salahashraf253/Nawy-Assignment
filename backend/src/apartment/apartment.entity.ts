@@ -13,6 +13,9 @@ export class Apartment {
   @Column({ length: 500 })
   description: string;
 
+  @Column({ length: 100 })
+  developer: string;
+
   @Column({ type: 'float' })
   price: number;
 
