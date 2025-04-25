@@ -27,6 +27,11 @@ export class CreateApartmentDto {
   @Length(10, 500)
   description: string;
 
+  @IsString()
+  @IsNotEmpty()
+  @Length(3, 100)
+  developer: string;
+
   @IsNumber()
   @IsNotEmpty()
   @IsPositive()
