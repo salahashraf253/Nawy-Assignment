@@ -22,5 +22,13 @@ export const fetchApartments = async (page = 1, limit = 10): Promise<Apartment[]
 };
 
 export const fetchApartmentById = async (id: number): Promise<Apartment> => {
-  return apiFetch(`${baseUrl}/apartments/${id}`);
+  const apartment = await apiFetch<Apartment>(`${baseUrl}/apartments/${id}`);
+
+  return {
+    ...apartment,
+    images: apartment.images?.map(img => ({
+      ...img,
+      url: `${baseUrl}${img.url}`,
+    })) ?? [],
+  };
 };
