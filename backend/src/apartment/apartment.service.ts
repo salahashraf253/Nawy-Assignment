@@ -42,7 +42,7 @@ export class ApartmentService {
     return apartment;
   }
 
-  async create(dto: CreateApartmentDto,images: Express.Multer.File[]): Promise<Apartment> {
+  async create(dto: CreateApartmentDto,images: Express.Multer.File[]): Promise<FetchApartmentDto> {
     const apartment = this.apartmentRepo.create(dto);
     apartment.images=[];
     for (const image of images) {
@@ -59,6 +59,6 @@ export class ApartmentService {
       throw new NotFoundException(`Apartment with ID ${id} not found`);
     }
     await this.apartmentRepo.remove(apartment);
-    return { message: `Apartment with ID ${id} has been deleted` };
+    return { message: 'Apartment deleted successfully' };
   }
 }
