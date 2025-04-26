@@ -81,7 +81,7 @@ const ApartmentDetails = () => {
           <p><span className="font-semibold">Bathrooms:</span> {apartment.noOfBathrooms}</p>
           <p><span className="font-semibold">City:</span> {apartment.city}</p>
           <p><span className="font-semibold">Sale Type:</span> {apartment.saleType}</p>
-          <p><span className="font-semibold">Delivery Date:</span> {apartment.deliveryDate}</p>
+          <p><span className="font-semibold">Delivery Date:</span>{new Date(apartment.deliveryDate).toLocaleDateString()}</p>
         </div>
 
         {/* Description */}
