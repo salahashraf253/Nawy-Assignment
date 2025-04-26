@@ -1,8 +1,9 @@
 import React from "react";
-import Slider from "react-slick";
 import { Apartment } from '../apartment/apartment'; 
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import Link from "next/link";
+import ImageSlider from "./ImageSlider";
 
 interface ApartmentCardProps {
   apartment: Apartment;
@@ -23,35 +24,11 @@ const ApartmentCard: React.FC<ApartmentCardProps> = ({ apartment }) => {
     images,
   } = apartment;
 
-  const sliderSettings = {
-    dots: true,
-    infinite: true,
-    speed: 500,
-    slidesToShow: 1,
-    slidesToScroll: 1,
-    arrows: true,
-  };
-
   return (
+    <Link href={`/apartment/${apartment.id}`} className="no-underline text-black">
     <div className="border rounded-lg overflow-hidden shadow-md mb-6">
       <div className="relative h-64 w-full bg-gray-200">
-        {images && images.length > 0 ? (
-          <Slider {...sliderSettings}>
-            {images.map((img, index) => (
-              <div key={index}>
-                <img
-                  src={img.url}
-                  alt={`${title} Image ${index + 1}`}
-                  className="object-cover w-full h-64"
-                />
-              </div>
-            ))}
-          </Slider>
-        ) : (
-          <div className="h-64 flex items-center justify-center text-gray-400">
-            No Image Available
-          </div>
-        )}
+      <ImageSlider images={images || []} altPrefix={title} heightClass="h-64" />
       </div>
 
       <div className="p-4">
@@ -76,6 +53,7 @@ const ApartmentCard: React.FC<ApartmentCardProps> = ({ apartment }) => {
         </p>
       </div>
     </div>
+    </Link>
   );
 };
 
