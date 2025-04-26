@@ -1,3 +1,9 @@
+import ApartmentsInEgypt from  './apartment/page'
+
 export default function Home() {
-  return <div>Welcome to your new Next.js app!</div>;
+  return (
+    <main>
+      <ApartmentsInEgypt />
+    </main>
+  );
 }
